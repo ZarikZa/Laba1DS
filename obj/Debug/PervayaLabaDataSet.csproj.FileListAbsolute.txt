@@ -30,3 +30,4 @@ C:\Users\MSI-MODERN-14\source\repos\PervayaLabaDataSet\PervayaLabaDataSet\obj\De
 C:\Users\MSI-MODERN-14\source\repos\PervayaLabaDataSet\PervayaLabaDataSet\obj\Debug\PervayaL.B2FDD39B.Up2Date
 C:\Users\MSI-MODERN-14\source\repos\PervayaLabaDataSet\PervayaLabaDataSet\obj\Debug\PervayaLabaDataSet.exe
 C:\Users\MSI-MODERN-14\source\repos\PervayaLabaDataSet\PervayaLabaDataSet\obj\Debug\PervayaLabaDataSet.pdb
+C:\Users\MSI-MODERN-14\source\repos\PervayaLabaDataSet\PervayaLabaDataSet\obj\Debug\PervayaLabaDataSet_Content.g.cs
