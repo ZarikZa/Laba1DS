@@ -22,67 +22,29 @@ namespace PervayaLabaDataSet
     public partial class Orrders : Page
     {
         OrdersTableAdapter ordersTableAdapter = new OrdersTableAdapter();
+        ClientsTableAdapter clientsTableAdapter = new ClientsTableAdapter();
         public Orrders()
         {
             InitializeComponent();
             datygridy.IsReadOnly = true;
             datygridy.ItemsSource = ordersTableAdapter.GetData();
+            FiltrCbox.ItemsSource = clientsTableAdapter.GetData();
+            FiltrCbox.DisplayMemberPath = "ClientName";
         }
-        private void DeleteBtm_Click(object sender, RoutedEventArgs e)
+        private void SearchBtm_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                ordersTableAdapter.DeleteQuery(Convert.ToInt32(id));
-                datygridy.ItemsSource = ordersTableAdapter.GetData();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Нельзя удалить, соrrи");
-            }
+            datygridy.ItemsSource = ordersTableAdapter.GetDataForOrders(Convert.ToInt32(SearchTbox.Text));
         }
 
-        private void AddBtm_Click(object sender, RoutedEventArgs e)
+        private void FiltrCbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ID_ClientTbox.Text != "")
-            {
-                try
-                {
-                    ordersTableAdapter.InsertQuery(Convert.ToInt32(ID_ClientTbox.Text), Convert.ToInt32(ID_UnitazTbox.Text));
-                    datygridy.ItemsSource = ordersTableAdapter.GetData();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Указан неверный ID");
-                }
-            }
+            var id = (int)(FiltrCbox.SelectedItem as DataRowView).Row[0];
+            datygridy.ItemsSource = ordersTableAdapter.GetDataCtoto(id);
         }
 
-        private void datygridy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ClearBtm_Click(object sender, RoutedEventArgs e)
         {
-            var cheged = (datygridy.SelectedItem as DataRowView);
-            if(cheged != null)
-            {
-                ID_ClientTbox.Text = cheged.Row[1].ToString();
-                ID_UnitazTbox.Text = cheged.Row[2].ToString();
-            }
-        }
-
-        private void EditBtm_Click(object sender, RoutedEventArgs e)
-        {
-            if (ID_ClientTbox.Text != "")
-            {
-                try
-                {
-                    var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                    ordersTableAdapter.UpdateQuery(Convert.ToInt32(ID_ClientTbox.Text), Convert.ToInt32(ID_UnitazTbox.Text), Convert.ToInt32(id));
-                    datygridy.ItemsSource = ordersTableAdapter.GetData();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Такое имя уже существует");
-                }
-            }
+            datygridy.ItemsSource = ordersTableAdapter.GetData();
         }
     }
 }

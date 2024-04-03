@@ -69,6 +69,9 @@
     <Compile Include="Clientts.xaml.cs">
       <DependentUpon>Clientts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Laba1DataSet.cs">
+      <DependentUpon>Laba1DataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Laba1DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

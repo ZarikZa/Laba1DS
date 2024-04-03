@@ -29,62 +29,9 @@ namespace PervayaLabaDataSet
             datygridy.IsReadOnly = true;
             datygridy.ItemsSource = clientsTableAdapter.GetData();
         }
-        private void DeleteBtm_Click(object sender, RoutedEventArgs e)
+        private void SearchBtm_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                clientsTableAdapter.DeleteQuery(Convert.ToInt32(id));
-                datygridy.ItemsSource = clientsTableAdapter.GetData();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Нельзя удалить, соrrи");
-            }
-        }
-
-        private void AddBtm_Click(object sender, RoutedEventArgs e)
-        {
-            if (NameTbox.Text != "")
-            {
-                try
-                {
-                    clientsTableAdapter.InsertQuery(NameTbox.Text, SurnameTbox.Text, MiddleNameTbox.Text);
-                    datygridy.ItemsSource = clientsTableAdapter.GetData();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Такое имя уже существует или же указан неверный ID");
-                }
-            }
-        }
-
-        private void datygridy_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cheged = (datygridy.SelectedItem as DataRowView);
-            if(cheged != null)
-            {
-                NameTbox.Text = cheged.Row[1].ToString();
-                SurnameTbox.Text = cheged.Row[2].ToString();
-                MiddleNameTbox.Text = cheged.Row[3].ToString();
-            }
-        }
-
-        private void EditBtm_Click(object sender, RoutedEventArgs e)
-        {
-            if (NameTbox.Text != "")
-            {
-                try
-                {
-                    var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                    clientsTableAdapter.UpdateQuery(NameTbox.Text, SurnameTbox.Text, MiddleNameTbox.Text, Convert.ToInt32(id));
-                    datygridy.ItemsSource = clientsTableAdapter.GetData();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Такое имя уже существует");
-                }
-            }
+            datygridy.ItemsSource = clientsTableAdapter.GetDataBy3(SearchTbox.Text);
         }
     }
 }

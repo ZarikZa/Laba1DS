@@ -23,70 +23,30 @@ namespace PervayaLabaDataSet
     public partial class Unitaz : Page
     {
         UnitazsTableAdapter unitazsTableAdapter = new UnitazsTableAdapter();
+        UnitazTypesTableAdapter unitazTypesTableAdapter = new UnitazTypesTableAdapter();
         public Unitaz()
         {
             InitializeComponent();
             datygridy.IsReadOnly = true;
             datygridy.ItemsSource = unitazsTableAdapter.GetData();
+            FiltrCbox.ItemsSource = unitazTypesTableAdapter.GetData();
+            FiltrCbox.DisplayMemberPath = "UnitazType";
         }
 
-        private void DeleteBtm_Click(object sender, RoutedEventArgs e)
+        private void SearchBtm_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                unitazsTableAdapter.DeleteQuery(Convert.ToInt32(id));
-                datygridy.ItemsSource = unitazsTableAdapter.GetData();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Нельзя удалить, соrrи");
-            }
+            datygridy.ItemsSource = unitazsTableAdapter.GetDataForUnitaz(SearchTbox.Text);
         }
 
-        private void AddBtm_Click(object sender, RoutedEventArgs e)
+        private void FiltrCbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Nazvanie.Text != "")
-            {
-                try 
-                { 
-                    unitazsTableAdapter.InsertQuery(Nazvanie.Text, Convert.ToInt32(TypeTbox.Text), Convert.ToDecimal(PriceTbox.Text));
-                    datygridy.ItemsSource = unitazsTableAdapter.GetData();
-                }
-                catch
-                {
-                    MessageBox.Show("Такое имя уже существует или же указан неверный ID");
-                }
-            }
+            var id = (int)(FiltrCbox.SelectedItem  as DataRowView).Row[0];
+            datygridy.ItemsSource = unitazsTableAdapter.GetDataBy3(id);
         }
 
-        private void datygridy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ClearBtm_Click(object sender, RoutedEventArgs e)
         {
-            var cheged = (datygridy.SelectedItem as DataRowView);
-            if (cheged != null)
-            {
-                Nazvanie.Text = cheged.Row[1].ToString();
-                TypeTbox.Text = cheged.Row[2].ToString();
-                PriceTbox.Text = cheged.Row[3].ToString();
-            }
-
-        }
-
-        private void EditBtm_Click(object sender, RoutedEventArgs e)
-        {
-            if (Nazvanie.Text != "")
-            {
-                try
-                {
-                    var id = (datygridy.SelectedItem as DataRowView).Row[0];
-                    unitazsTableAdapter.UpdateQuery(Nazvanie.Text, Convert.ToInt32(TypeTbox.Text), Convert.ToInt32(PriceTbox.Text), Convert.ToInt32(id));
-                    datygridy.ItemsSource = unitazsTableAdapter.GetData();
-                }
-                catch(Exception)
-                {
-                    MessageBox.Show("Такое имя уже существует");
-                }
-            }
+            datygridy.ItemsSource = unitazsTableAdapter.GetData();
         }
     }
 }
